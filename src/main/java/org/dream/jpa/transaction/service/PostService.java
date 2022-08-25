@@ -27,7 +27,7 @@ public class PostService {
     }
 
     @Transactional
-    public void findPostAndUpdateContent(Integer postId, String newContent) {
+    public synchronized void findPostAndUpdateContent(Integer postId, String newContent) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
         if(postOptional.isPresent()) {
             // 這段邏輯假設取出的資料內容是存成字串的 int
