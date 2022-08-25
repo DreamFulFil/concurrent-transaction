@@ -2,10 +2,12 @@ package org.dream.jpa.transaction.service;
 
 import java.util.Optional;
 
+import org.dream.jpa.transaction.aop.DeadLockRetry;
 import org.dream.jpa.transaction.model.Post;
 import org.dream.jpa.transaction.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,8 @@ public class PostService {
         return this.postRepository.save(post);
     }
 
-    @Transactional
+    @DeadLockRetry(retryCount = 50)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void findPostAndUpdateContent(Integer postId, String newContent) {
         Optional<Post> postOptional = this.postRepository.findById(postId);
         if(postOptional.isPresent()) {
