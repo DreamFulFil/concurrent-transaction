@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Version;
 
 import lombok.Data;
 
@@ -31,10 +30,4 @@ public class Post implements Serializable {
     @Column(name = "POST_CONTENT", length = 2000)
     private String content;
 
-    /**
-     * Optimistic Lock Snapshot version
-     */
-    @Version
-    private int version;
-    
 }
