@@ -34,4 +34,8 @@ spring:
        cachePrepStmts: true
        useServerPrepStmts: true
        prepStmtCacheSize: 256
+
+# 樂觀鎖的設定
+optimistic-lock:
+  retry-count: 100
    
